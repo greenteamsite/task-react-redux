@@ -1,0 +1,10 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "editor.tabSize": 2,
+    "stylelint.enable": true,
+    "files.autoSave": "onFocusChange",
+    "scss.lint.idSelector": "warning",
+    "scss.lint.important": "error",
+    "scss.lint.zeroUnits": "warning",
+    "files.insertFinalNewline": true
+}

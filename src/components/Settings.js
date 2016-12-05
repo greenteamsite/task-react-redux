@@ -1,32 +1,31 @@
-import React from 'react'
-//3, 'fd', 5, '#dd2c9a'
-const Settings = ({id, name, count, color, setWidget}) => {
-    let inputs = []
-    let values = []
-    let onBtnClick = (...a) => (
-        setWidget(...a)
-    )
-    return (
-        <div>
-            <form onSubmit={e => {
-                e.preventDefault()
-                for(let i in inputs){
-                    values.push(inputs[i].value || inputs[i].defaultValue)
-                }
-
-                onBtnClick(...values)
-            }
-            }>
-                <input type='hidden' value={id} />
-                <input type='text' name='name-input' defaultValue={name} ref={node => {inputs.push(node)}}/>
-                <input type='number' name='count-input' defaultValue={count} ref={node => {inputs.push(node)}}/>
-                <input type='color' name='color-input' defaultValue={color} ref={node => {inputs.push(node)}}/>
-                <button type='submit' id='btn save-btn'>
-                    Save
-                </button>
-            </form>
-        </div>
-    )
+import React, { PropTypes } from 'react';
+// 3, 'fd', 5, '#dd2c9a'
+function Settings(props) {
+  const onNameChangeBound = props.onNameChange.bind(this, props.id);
+  const onCountChangeBound = props.onCountChange.bind(this, props.id);
+  const onColorChangeBound = props.onColorChange.bind(this, props.id);
+  const onSaveBound = props.onSave.bind(this, props.id);
+  return (
+    <div>
+      <input type='text' value={props.name} onChange={onNameChangeBound} />
+      <input type='number' value={props.count} onChange={onCountChangeBound} />
+      <input type='color' value={props.color} onChange={onColorChangeBound} />
+      <button onClick={onSaveBound}>
+                Save
+            </button>
+    </div>
+  );
 }
 
-export default Settings
+Settings.propTypes = {
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+  color: PropTypes.string.isRequired,
+  onNameChange: PropTypes.func.isRequired,
+  onCountChange: PropTypes.func.isRequired,
+  onColorChange: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+};
+
+export default Settings;

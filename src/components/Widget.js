@@ -1,20 +1,20 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 
-const Widget = ({name}) => (
-    <div className='unselected'>
+const Widget = ({ name, color, count }) => (
+  <div className='unselected'>
     <div
-        className='widget'
-        onClick={function(e){
-            e.target.style.backgroundColor = 'green'
-        }}
+      style={{ backgroundColor: color }}
+      className='widget'
     >
-        <h3>{name}</h3>
+      <h3>{name} - ({count})</h3>
     </div>
-    </div>
-)
+  </div>
+);
 
 Widget.propTypes = {
-    name: PropTypes.string.isRequired
-}
+  name: PropTypes.string.isRequired,
+  color: PropTypes.string,
+  count: PropTypes.string,
+};
 
-export default Widget
+export default Widget;

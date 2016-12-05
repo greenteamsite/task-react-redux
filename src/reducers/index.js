@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux'
-import widgets from './widgets'
-import settings from './settings'
+import { combineReducers } from 'redux';
+import widgets from './widgets';
+import addWidget from './addWidget';
 
 export default combineReducers({
-    widgets,
-    settings
-}) 
+  widgets,
+  addWidget,
+});

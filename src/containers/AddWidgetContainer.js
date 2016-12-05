@@ -1,31 +1,57 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { addWidget } from '../actions'
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as addWidgetActions from '../actions/addWidgetActions';
+import * as widgetActions from '../actions/widgetActions';
+import AddWidget from '../components/AddWidget';
 
-let AddWidget = ({dispatch}) => {
-    let input
+class AddWidgetContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onNameChange = this.onNameChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
+  onNameChange(event) {
+    this.props.addWidgetActions.onNameChange(event.target.value);
+  }
+
+  onSubmit() {
+    this.props.widgetActions.addWidget(this.props.addWidget.name);
+  }
+
+  render() {
     return (
-        <div>
-            <form onSubmit={e => {
-                e.preventDefault()
-                if (!input.value.trim()){
-                    return
-                }
-                dispatch(addWidget(input.value))
-                input.value = ''
-            }}>
-                <input ref={node => {
-                    input = node
-                }} />
-                <button type='submit'>
-                    Add Widget
-                </button>
-            </form>
-        </div>
-    )
+      <AddWidget
+        {...this.props.addWidget}
+        onNameChange={this.onNameChange}
+        onSubmit={this.onSubmit}
+      />
+    );
+  }
 }
 
-AddWidget = connect()(AddWidget)
+function mapStateToProps(state) {
+  return {
+    addWidget: state.addWidget,
+  };
+}
 
-export default AddWidget
+function mapDispatchToProps(dispatch) {
+  return {
+    addWidgetActions: bindActionCreators(addWidgetActions, dispatch),
+    widgetActions: bindActionCreators(widgetActions, dispatch),
+  };
+}
+
+const addWidgetItem = {
+  name: PropTypes.string,
+};
+
+AddWidgetContainer.propTypes = {
+  addWidget: PropTypes.shape(addWidgetItem),
+  addWidgetActions: PropTypes.func.isRequired,
+  widgetActions: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddWidgetContainer);

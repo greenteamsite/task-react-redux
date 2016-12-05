@@ -1,21 +1,32 @@
-//import React from 'react'
-import { connect } from 'react-redux'
-import WidgetList from '../components/WidgetList'
-//import { PropTypes } from 'react'
+/* eslint-disable react/prefer-stateless-function */
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import WidgetList from '../components/WidgetList';
+// import { PropTypes } from 'react'
 
-const mapStateToProps = (state) => ({
-    widgets: state.widgets.map(w => {
-        return {
-            id: w.id,
-            name: w.name
-        }
-    })
-})
+class WidgetContainer extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  // }
 
-/*const mapDispatchToProps = ({dispatch}) => ({
+  render() {
+    return (
+      <WidgetList widgets={this.props.widgets} />
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    widgets: state.widgets,
+  };
+}
+
+WidgetContainer.propTypes = {
+  widgets: PropTypes.array.isRequired,
+};
+/* const mapDispatchToProps = ({dispatch}) => ({
     //setWidget: bindActionCreator()
 })*/
 
-const WidgetContainer = connect(mapStateToProps)(WidgetList)
-
-export default WidgetContainer
+export default connect(mapStateToProps)(WidgetContainer);
